@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="app" class="container my-3">
+        <button id="get" class="btn btn-outline-primary">Get</button>
+        <button id="post" class="btn btn-outline-primary">Post</button>
+        <button id="patch" class="btn btn-outline-primary">Patch</button>
+        <button id="delete" class="btn btn-outline-primary">Delete</button>
+    </div>
+    <script>
+        document.querySelector('#get').addEventListener('click', getData);
+        document.querySelector('#post').addEventListener('click', postData);
+        document.querySelector('#patch').addEventListener('click', patchData);
+        document.querySelector('#delete').addEventListener('click', deleteData);
+
+
+        var uuid = '82a32758-aadc-4405-b535-2f6a678989d8';
+        var token = '7yaPDgRGh5hHKAkAeIUtl1H3yiFQS6wN8a6Cs0gGSFZNYaC45Mi02hhDcHZt';
+        var apiPath = 'https://course-ec-api.hexschool.io/';
+
+        // 小心，有錯～，請參考課程影片
+        var sampleData = {
+            title: '好茶',
+            category: 'tea',
+            content: '內容',
+            imageUrl: [
+                'https://images.unsplash.com/photo-1587918515749-a2a68b40a124?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
+            ],
+            enabled: true,
+            origin_price: 100,
+            price: 90,
+            unit: '杯',
+        }
+
+        // axios.defaults.headers['Authorization']
+        // axios 設定說明：https://github.com/axios/axios#config-defaults
+        // let headers = {
+        //     "Content-Type": "application/json",
+        //     "Accept": "application/json",
+        //     "Authorization": "Bearer {token}",
+        // };
+
+        axios.defaults.headers['Authorization'] =`Bearer ${token}`;//%%空格
+        function getData() {
+            console.log('getData');
+            let api = `${apiPath}api/${uuid}/admin/ec/products`;
+            axios.get(api)
+                .then(function (res) {
+                    console.log(res);
+                })
+        }
+
+        function postData() {
+            console.log('postData');
+            let api = `${apiPath}api/${uuid}/admin/ec/product`;
+            let data = {
+                title: '好茶',
+                category: 'tea',
+                content: '內容',
+                description:'增加商品描述',
+                imageUrl: [
+                    'https://images.unsplash.com/photo-1587918515749-a2a68b40a124?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
+                ],
+                enabled: true,
+                origin_price: 100,
+                price: 90,
+                unit: '杯',
+            }
+            axios.post(api,data)
+                .then(function (res) {
+                    console.log(res);
+                })
+            
+            // 442看 preview
+            // {message: "The given data was invalid.", errors: {description: ["description 不能留空。"]}}@@為何報錯
+        }
+
+        function patchData() {
+            console.log('patchData');
+            let api = `${apiPath}api/${uuid}/admin/ec/product/2IMec8JLQoTpPZHLXBI3QPgqNFTbkBPor352qRskjqa4G7dnQ6lvmvJOaLYIT37g`;
+            let data = {
+                title: '這是一杯杯好茶',
+                category: 'tea',
+                content: '內容',
+                description:'增加商品描述',
+                imageUrl: [
+                    'https://images.unsplash.com/photo-1587918515749-a2a68b40a124?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
+                ],
+                enabled: true,
+                origin_price: 100,
+                price: 90,
+                unit: '杯',
+            }
+            axios.patch(api,data)
+                .then(function (res) {
+                    console.log(res);
+                })
+        }
+
+        function deleteData() {
+            console.log('deleteData');
+            let api = `${apiPath}api/${uuid}/admin/ec/product/2IMec8JLQoTpPZHLXBI3QPgqNFTbkBPor352qRskjqa4G7dnQ6lvmvJOaLYIT37g`;
+            axios.delete(api)
+                .then(function (res) {
+                    console.log(res);
+                })
+        }
+    </script>
+</body>
+
+</html>
