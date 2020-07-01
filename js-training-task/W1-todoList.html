@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,20 @@
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
     <title>Document</title>
     <style>
-    .outline{
-        outline: 1px solid red;
-    }
-    .completed{
-        text-decoration:line-through;
-    }
+
+        .completed {
+            text-decoration: line-through;
+        }
     </style>
 </head>
+<!-- PS D:\Users\sam.yang\Documents\JavaScript> git rm --cached node_modules
+fatal: not removing 'node_modules' recursively without -r -->
+<!-- git rm -r –cached . -->
+<!-- git rm -r --cached node_modules -->
+<!-- node_modules jquery沒出現 -->
 <body>
     <div id="app" class="container my-3">
-        <div class="input-group mb-3 outline">
+        <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">
                     待辦事項
@@ -56,7 +60,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     <script>
         // 使用者故事
@@ -74,6 +78,11 @@
                 title: 'js',
                 id: 12466552,
                 completed: false
+            },
+            {
+                title: 'vue',
+                id: 84766552,
+                completed: false
             }
         ]
 
@@ -83,74 +92,84 @@
         const todoCount = document.getElementById('todoCount');
         const clearAllBtn = document.getElementById('clearTodo');
 
-        addBtn.addEventListener('click',addTodo);
-        todoList.addEventListener('click',doSomething);
-        clearAllBtn.addEventListener('click',clearAllTodo);
-        
+        addBtn.addEventListener('click', addTodo);
+        todoList.addEventListener('click', doSomething);
+        clearAllBtn.addEventListener('click', clearAllTodo);
+
         render(todoData);
 
-        function addTodo(){
-            let value =  todoInput.value.trim();
+        function addTodo() {
+            let value = todoInput.value.trim();
             console.log(value);
             console.log(Date.now());
-            let timestamp = Math.floor(Date.now());//@@為何要floor
+            let timestamp = Math.floor(Date.now()); //@@為何要floor
             console.log(timestamp);
             todoData.push({
-                title:value,
-                id:timestamp,
-                completed:false
+                title: value,
+                id: timestamp,
+                completed: false
             })
-            todoInput.value="";
+            todoInput.value = "";
             render(todoData);
         }
 
-        function doSomething(e){
-            console.log(e.target);//裡面的內容
-            console.log(e.target.parentNode);//外面的容器
+        function doSomething(e) {
+            console.log(e.target); //裡面的內容
+            console.log(e.target.parentNode); //外面的容器
             let todoId = e.target.parentNode.dataset.id;
             let action = e.target.parentNode.dataset.action;
-            
-            if(action === 'complete'){
-                console.log('complete');
-                /*修改資料*/
-                todoData.forEach(function(item){
-                    console.log(todoId,item.id);//##字串&數值
-                    
-                    // if( todoId === item.id){
-                    if( todoId == item.id){//%%轉型
-                        item.completed = !item.completed;
-                    }
-                })
-                console.log(todoData);
-                /*渲染*/
-                render(todoData);
-            }else if(action === 'remove'){
-                console.log('remove');
-                let newIndex = 0;
-                /*修改資料*/
-                // todoData.forEach(function(key,item){%%
-                todoData.forEach(function(item,key){
-                    // if(todoId === item.id){
-                    if(todoId == item.id){
-                        newIndex = key;
-                    }
-                })
-                todoData.splice(newIndex,1);
 
-                render(todoData);
+            if (action === 'complete') {
+                console.log('complete');
+                completeTodo(todoId);
+            } else if (action === 'remove') {
+                console.log('remove');
+                removeTodo(todoId);
             }
         }
 
-        function clearAllTodo(e){
+        function completeTodo(todoId) {
+            /*修改資料*/
+            // console.log(todoId, item.id); //##字串&數值
+            todoData.forEach(function (item) {
+                console.log(todoId,item.id);
+                // if( todoId === item.id){
+                if (todoId == item.id) { //%%轉型
+                    item.completed = !item.completed;
+                }
+                return false;//@@無效
+            })
+            console.log(todoData);
+            /*渲染*/
+            render(todoData);
+        }
+
+        function removeTodo(todoId) {
+            let newIndex = 0;
+            /*修改資料*/
+            // todoData.forEach(function(key,item){%%
+            todoData.forEach(function (item, key) {
+                // if(todoId === item.id){
+                if (todoId == item.id) {
+                    newIndex = key;
+                }
+                return;
+            })
+            todoData.splice(newIndex, 1);
+
+            render(todoData);
+        }
+
+        function clearAllTodo(e) {
             e.preventDefault();
             todoData = [];
             render(todoData);
         }
 
-        function render(todoData){
+        function render(todoData) {
             let str = "";
-            todoData.forEach(function(item){
-                str+=`
+            todoData.forEach(function (item) {
+                str += `
                 <li class="list-group-item">
                     <div class="d-flex">
                         <div class="form-check" 
@@ -172,7 +191,7 @@
             // todoCount.innerText = 3;
             todoCount.textContent = todoData.length;
         }
-
     </script>
 </body>
+
 </html>
