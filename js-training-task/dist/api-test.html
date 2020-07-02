@@ -104,11 +104,11 @@
                 })
         }
 
-        async function postData() {
+        function postData() {
             console.log('postData');
             const api = `${apiPath}api/${uuid}/admin/ec/product`;
             
-            productData.forEach(item =>{
+            productData.forEach( async (item) =>{
 
                 await axios.post(api, item)
                     .then(function (res) {

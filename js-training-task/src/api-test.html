@@ -104,21 +104,20 @@
                 })
         }
 
-        // @@能不能開個刪除全部商品的api 譬如前面打錯要一筆一筆刪
         function postData() {
             console.log('postData');
             const api = `${apiPath}api/${uuid}/admin/ec/product`;
             
-            productData.forEach(item =>{
+            productData.forEach( async (item) =>{
 
-                axios.post(api, item)
+                await axios.post(api, item)
                     .then(function (res) {
                         console.log(res);
                     })
             })
 
             // 442看 preview
-            // {message: "The given data was invalid.", errors: {description: ["description 不能留空。"]}}@@為何報錯
+            // {message: "The given data was invalid.", errors: {description: ["description 不能留空。"]}}@@報錯
         }
 
         function patchData() {

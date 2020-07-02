@@ -37,7 +37,7 @@ const productList = {
         console.log(this);
         this.data.products.forEach(item => {
             str += `
-            <div class="col-4">
+            <div class="col-4 mb-4">
                 <div class="card">
                     <img src="${item.imageUrl[0]}" class="card-img-top" alt="...">
                     <div class="card-body">
