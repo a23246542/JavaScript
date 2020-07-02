@@ -1,5 +1,5 @@
 const productPage = document.querySelector('#app').children[0];
-// const productPage = document.querySelector('#app').childNodes[0];@@文字 差別??
+// const productPage = document.querySelector('#app').childNodes[0];@@文字 差別
 
 const productList = {
     data:{
@@ -7,8 +7,8 @@ const productList = {
         products:[]
     },
     getProduct(){
-        const api = `https://course-ec-api.hexschool.io/api/${this.data.uuid}/ec/products`
         const vm = this;
+        const api = `https://course-ec-api.hexschool.io/api/${this.data.uuid}/ec/products`
         axios.get(api)
         .then(res => {
             // console.log(res);
@@ -32,7 +32,6 @@ const productList = {
         
     },
     renderList(){
-        // 清空頁面
         // @@ api description不見了
         let str = '';
         console.log(this);
