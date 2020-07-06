@@ -57,7 +57,7 @@ fatal: not removing 'node_modules' recursively without -r -->
             </ul>
             <div class="card-footer">
                 <div class="d-flex justify-content-between">
-                    <span>有<span id="todoCount">0</span>筆任務</span>
+                    <span>有<span id="todoCount">0</span>筆未完成任務</span>
                     <a id="clearTodo" href="#" class="">清除所有任務</a>
                 </div>
             </div>
@@ -139,7 +139,8 @@ fatal: not removing 'node_modules' recursively without -r -->
                 if (todoId == item.id) { //%%轉型
                     item.completed = !item.completed;
                 }
-                return false;//@@無效
+                return false;//@@為何無效
+                // return;
             })
             console.log(todoData);
             /*渲染*/
@@ -168,6 +169,16 @@ fatal: not removing 'node_modules' recursively without -r -->
             render(todoData);
         }
 
+        function countTodo(){
+            let count = 0;
+            todoData.forEach(item => {
+                if (item.completed === false){
+                    count++;
+                }
+            })
+            console.log(count);
+            return count;
+        }
         function render(todoData) {
             let str = "";
             todoData.forEach(function (item) {
@@ -191,7 +202,7 @@ fatal: not removing 'node_modules' recursively without -r -->
             })
             todoList.innerHTML = str;
             // todoCount.innerText = 3;
-            todoCount.textContent = todoData.length;
+            todoCount.textContent = countTodo();
         }
     </script>
 </body>
