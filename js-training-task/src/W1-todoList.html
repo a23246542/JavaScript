@@ -73,17 +73,17 @@ fatal: not removing 'node_modules' recursively without -r -->
         let todoData = [ //@@不能用const
             {
                 title: 'css',
-                id: 1246542,
+                id: 1896542,
                 completed: false
             },
             {
                 title: 'js',
-                id: 12466552,
+                id: 25466552,
                 completed: false
             },
             {
                 title: 'vue',
-                id: 84766552,
+                id: 34766552,
                 completed: false
             }
         ]
@@ -132,15 +132,26 @@ fatal: not removing 'node_modules' recursively without -r -->
 
         function completeTodo(todoId) {
             /*修改資料*/
+            console.log('執行completeTodo');
             // console.log(todoId, item.id); //##字串&數值
-            todoData.forEach(function (item) {
+            // todoData.forEach(function (item) {
+            //     console.log(todoId,item.id);
+            //     // if( todoId === item.id){
+            //     if (todoId == item.id) { //%%轉型
+            //         item.completed = !item.completed;
+            //     }
+            //     return false;//@@為何無效 因為無法中斷到外面的forEach
+            //     // return;
+            // })
+            
+            todoData.some(function(item){
                 console.log(todoId,item.id);
-                // if( todoId === item.id){
-                if (todoId == item.id) { //%%轉型
+                // if (todoId === item.id){
+                if (todoId == item.id){
                     item.completed = !item.completed;
+                    return true;
                 }
-                return false;//@@為何無效
-                // return;
+                
             })
             console.log(todoData);
             /*渲染*/
